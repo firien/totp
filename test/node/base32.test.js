@@ -1,4 +1,4 @@
-import base32Decoder, { map, bitsPerChar, bitsPerByte } from '../src/base32.js'
+import base32Decoder, { map, bitsPerChar, bitsPerByte } from '../../src/base32.js'
 import test from 'node:test'
 import assert from 'node:assert/strict'
 
