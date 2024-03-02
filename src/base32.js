@@ -1,5 +1,5 @@
-const bitsPerChar = 5
-const bitsPerByte = 8
+export const bitsPerChar = 5
+export const bitsPerByte = 8
 
 const base32chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'
 const map = new Map()
@@ -8,6 +8,7 @@ for (let i = 0; i < base32chars.length; i++) {
   map.set(char, i)
 }
 
+export { map }
 /**
  * slightly complicated base32 decoder.
  * every character represents 5 bits
@@ -25,10 +26,10 @@ export default (base32) => {
   const bytes = []
   let bitCount = 0
   let bits = 0
-  for (let i = 0; i < base32.length; i++) {
-    const val = map.get(base32.charAt(i).toUpperCase())
+  for (const char of base32) {
+    const val = map.get(char.toUpperCase())
     if (val === undefined) {
-      throw new Error(`'${base32.charAt(i)}' is an invalid base32 character`)
+      throw new Error(`'${char}' is an invalid base32 character`)
     }
     const newBitCount = bitCount + bitsPerChar
     if (newBitCount >= bitsPerByte) {
@@ -50,6 +51,6 @@ export default (base32) => {
     }
   }
   // cleanup
-  bytes.push(bits << (bitCount - bitsPerByte))
+  bytes.push(bits << (bitsPerByte - bitCount))
   return new Uint8Array(bytes)
 }
